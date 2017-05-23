@@ -1,0 +1,20 @@
+
+shadow.png
+size: 2048,2048
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+shadowani
+  rotate: false
+  xy: 2, 2
+  size: 750, 857
+  orig: 750, 859
+  offset: 0, 0
+  index: -1
+sonicani
+  rotate: false
+  xy: 754, 2
+  size: 746, 1654
+  orig: 746, 1654
+  offset: 0, 0
+  index: -1
