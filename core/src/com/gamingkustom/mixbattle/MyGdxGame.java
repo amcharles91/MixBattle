@@ -27,9 +27,13 @@ public class MyGdxGame extends ApplicationAdapter {
     TextureRegion sonic;
     TextureRegion shadow;
     Sprite shadowstan;
+    private int gameState = 0;
     private float w,h;
     private int flapState = 0;
     private int cur;
+    float sY = 0;
+    float vel = 0;
+    float gravity = 2;
     private float stateTimer;
     private boolean runningRight;
     Array<TextureRegion> frames;
@@ -69,12 +73,33 @@ public class MyGdxGame extends ApplicationAdapter {
             Gdx.app.debug("frames", "i is =" + i);
         }
         shadowRun = new Animation(0.1f, frames);
+        sY =((h/2)-frames.get(cur).getRegionWidth());
         //frames.clear();
 	}
 
 
 	@Override
 	public void render () {
+
+        if(gameState != 0) {
+
+            if(Gdx.input.justTouched()){
+                vel = -30;
+            }
+
+            if(sY > 0 || vel < 0) {
+
+                vel = vel + gravity;
+                sY -= vel;
+            }
+
+        }else{
+
+            if(Gdx.input.justTouched()){
+                Gdx.app.log("touch", "Shadow was touched dirty");
+                gameState =1;
+            }
+        }
 
         if(flapState < 9){
             cur = 0;
@@ -96,16 +121,16 @@ public class MyGdxGame extends ApplicationAdapter {
             flapState=0;
         }
 
-		batch.begin();
-		batch.draw(background, 0,0, w, h);
+        batch.begin();
+        batch.draw(background, 0, 0, w, h);
         //batch.draw(flappy[flapState], ((w/2)-(flappy[flapState].getWidth()/2)),
-          //      ((h/2)-(flappy[flapState].getHeight()/2)));
+        //      ((h/2)-(flappy[flapState].getHeight()/2)));
 
-        batch.draw(frames.get(cur), w/2,h/2,128, 152);
+        batch.draw(frames.get(cur), ((w / 2) - frames.get(cur).getRegionWidth()),
+                sY, 128, 152);
 
 
-
-		batch.end();
+        batch.end();
 	}
 	
 	@Override
